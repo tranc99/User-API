@@ -58,7 +58,15 @@ const updateUser = (request, response) => {
 }
 
 const deleteUser = (request, response) => {
+  const id = request.params.id
 
+  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    response.status(200).json({ Result: 'User deleted', user: { id: id } })
+  })
 }
 
 // export functions
